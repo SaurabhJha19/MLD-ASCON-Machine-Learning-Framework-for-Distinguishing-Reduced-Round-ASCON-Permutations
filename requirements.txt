@@ -1,2 +1,6 @@
 numpy
 pytest
+pandas
+scikit-learn
+torch
+matplotlib
