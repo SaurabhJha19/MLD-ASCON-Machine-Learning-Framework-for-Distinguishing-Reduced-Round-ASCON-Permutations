@@ -4,3 +4,5 @@ pandas
 scikit-learn
 torch
 matplotlib
+xgboost
+tensorflow

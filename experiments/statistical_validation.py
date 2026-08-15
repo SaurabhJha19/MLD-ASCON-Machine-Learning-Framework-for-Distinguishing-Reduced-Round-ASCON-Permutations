@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -10,6 +11,7 @@ from datasets.integral_dataset import generate_dataset as generate_integral
 from datasets.cube_dataset import generate_dataset as generate_cube
 
 ROUNDS = [2, 3, 4, 5]
+REPEATS = 10
 
 GENERATORS = {
     "Differential": generate_differential,
@@ -18,7 +20,7 @@ GENERATORS = {
 }
 
 
-def evaluate_dataset(dataset_path):
+def evaluate_dataset(dataset_path, seed):
     df = pd.read_csv(dataset_path)
 
     X = df.drop(columns=["label"]).values
@@ -28,7 +30,7 @@ def evaluate_dataset(dataset_path):
         X,
         y,
         test_size=0.2,
-        random_state=42,
+        random_state=seed,
         stratify=y,
     )
 
@@ -40,7 +42,7 @@ def evaluate_dataset(dataset_path):
         colsample_bytree=0.8,
         objective="binary:logistic",
         eval_metric="logloss",
-        random_state=42,
+        random_state=seed,
         n_jobs=-1,
     )
 
@@ -54,15 +56,13 @@ def evaluate_dataset(dataset_path):
 if __name__ == "__main__":
     os.makedirs("results", exist_ok=True)
 
-    results = {}
+    rows = []
 
     for feature_name, generator in GENERATORS.items():
-        accuracies = []
-
         print(f"\\n=== {feature_name} ===")
 
         for r in ROUNDS:
-            path = f"results/tmp_{feature_name.lower()}_r{r}.csv"
+            path = f"results/stat_{feature_name.lower()}_r{r}.csv"
 
             generator(
                 rounds=r,
@@ -70,28 +70,60 @@ if __name__ == "__main__":
                 output_file=path,
             )
 
-            acc = evaluate_dataset(path)
+            scores = []
 
-            accuracies.append(acc)
+            for seed in range(REPEATS):
+                acc = evaluate_dataset(path, seed)
+                scores.append(acc)
 
-            print(f"Round {r}: {acc:.4f}")
+            scores = np.array(scores)
 
-        results[feature_name] = accuracies
+            mean = scores.mean()
+            std = scores.std(ddof=1)
+            ci95 = 1.96 * std / np.sqrt(REPEATS)
+
+            rows.append({
+                "Feature": feature_name,
+                "Rounds": r,
+                "Mean Accuracy": mean,
+                "Std": std,
+                "95% CI": ci95,
+            })
+
+            print(
+                f"Round {r}: {mean:.4f} ± {std:.4f} "
+                f"(CI ± {ci95:.4f})"
+            )
+
+    results = pd.DataFrame(rows)
+
+    results.to_csv("results/statistical_results.csv", index=False)
 
     plt.figure(figsize=(7,4))
 
-    for feature_name, accs in results.items():
-        plt.plot(ROUNDS, accs, marker="o", linewidth=2, label=feature_name)
+    for feature in results["Feature"].unique():
+        subset = results[results["Feature"] == feature]
+
+        plt.errorbar(
+            subset["Rounds"],
+            subset["Mean Accuracy"],
+            yerr=subset["95% CI"],
+            marker="o",
+            linewidth=2,
+            capsize=4,
+            label=feature,
+        )
 
     plt.xticks(ROUNDS)
     plt.ylim(0.45, 1.02)
     plt.xlabel("ASCON Rounds")
     plt.ylabel("XGBoost Accuracy")
-    plt.title("Distinguishability Across ASCON Rounds by Feature Representation")
+    plt.title("Statistically Validated Distinguishability Across ASCON Rounds")
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
 
-    plt.savefig("results/rounds_comparison.png", dpi=300)
+    plt.savefig("results/rounds_comparison_errorbars.png", dpi=300)
 
-    print("\\nSaved results/rounds_comparison.png")
+    print("\\nSaved results/statistical_results.csv")
+    print("Saved results/rounds_comparison_errorbars.png")
