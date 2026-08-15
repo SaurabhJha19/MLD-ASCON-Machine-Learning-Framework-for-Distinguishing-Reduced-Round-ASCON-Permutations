@@ -25,25 +25,34 @@ def xor_states(a, b):
     )
 
 
-def integral_vector(base_state, rounds=4):
+def integral_vector(base_state, rounds=4, active_word=0):
     """
-    Build an integral by varying the lowest 8 bits of x0.
-    XOR all resulting outputs together.
+    Build an integral by varying the lowest 8 bits of one ASCON word.
+    active_word: 0..4 corresponding to x0..x4
     """
     acc = AsconState(0, 0, 0, 0, 0)
 
     for v in range(256):
         s = base_state.copy()
-        s.x0 = (s.x0 & 0xFFFFFFFFFFFFFF00) | v
+
+        if active_word == 0:
+            s.x0 = (s.x0 & 0xFFFFFFFFFFFFFF00) | v
+        elif active_word == 1:
+            s.x1 = (s.x1 & 0xFFFFFFFFFFFFFF00) | v
+        elif active_word == 2:
+            s.x2 = (s.x2 & 0xFFFFFFFFFFFFFF00) | v
+        elif active_word == 3:
+            s.x3 = (s.x3 & 0xFFFFFFFFFFFFFF00) | v
+        elif active_word == 4:
+            s.x4 = (s.x4 & 0xFFFFFFFFFFFFFF00) | v
 
         out = ascon_permutation(s, rounds)
-
         acc = xor_states(acc, out)
 
     return acc
 
 
-def generate_dataset(rounds=4, samples=5000, output_file="results/integral_r4.csv"):
+def generate_dataset(rounds=4, samples=5000, active_word=0, output_file="results/integral_r4.csv"):
     output_path = Path(output_file)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -58,7 +67,7 @@ def generate_dataset(rounds=4, samples=5000, output_file="results/integral_r4.cs
         # Class 1: True integral vectors
         for _ in range(half):
             base = random_state()
-            vec = integral_vector(base, rounds)
+            vec = integral_vector(base, rounds, active_word)
             writer.writerow(state_to_bits(vec) + [1])
 
         # Class 0: Random XOR aggregates
@@ -76,4 +85,4 @@ def generate_dataset(rounds=4, samples=5000, output_file="results/integral_r4.cs
 
 
 if __name__ == "__main__":
-    generate_dataset(rounds=4, samples=5000)
+    generate_dataset(rounds=4, samples=5000, active_word=0,)

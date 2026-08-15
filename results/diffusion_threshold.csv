@@ -1,0 +1,6 @@
+round,hamming_distance,ml_accuracy,distinguishable
+1,7.51,1.0,True
+2,49.25,1.0,True
+3,140.62,0.9998,True
+4,159.98,0.5035,False
+5,,0.5067,False

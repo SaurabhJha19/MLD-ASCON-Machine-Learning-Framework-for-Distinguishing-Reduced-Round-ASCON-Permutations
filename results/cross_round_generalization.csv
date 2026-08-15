@@ -1,0 +1,8 @@
+Feature,Train Round,Test Round,Accuracy
+Differential,2,3,0.5
+Differential,3,4,0.5
+Differential,4,5,0.505
+Integral,3,4,1.0
+Integral,4,5,0.5
+Cube,3,4,1.0
+Cube,4,5,0.5

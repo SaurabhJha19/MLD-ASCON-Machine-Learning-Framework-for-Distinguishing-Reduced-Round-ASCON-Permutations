@@ -1,0 +1,5 @@
+dataset,classical_accuracy,class0_mean_hw,class1_mean_hw,threshold
+results/differential_r2.csv,1.0,160.0062,49.2337,104.61995
+results/differential_r3.csv,0.82655,159.9023,140.5601,150.2312
+results/differential_r4.csv,0.5016,159.881,159.9774,159.92919999999998
+results/differential_r5.csv,0.50105,160.1319,160.0228,160.07735

@@ -27,19 +27,29 @@ def xor_states(a, b):
     )
 
 
-def apply_input_difference(state):
+def apply_input_difference(state, word, bit):
     from ascon.state import AsconState
 
-    return AsconState(
-        state.x0 ^ 0x1,
-        state.x1,
-        state.x2,
-        state.x3,
-        state.x4,
-    )
+    s = state.copy()
+    mask = 1 << bit
+
+    if word == 0:
+        s.x0 ^= mask
+    elif word == 1:
+        s.x1 ^= mask
+    elif word == 2:
+        s.x2 ^= mask
+    elif word == 3:
+        s.x3 ^= mask
+    elif word == 4:
+        s.x4 ^= mask
+    else:
+        raise ValueError("word must be between 0 and 4")
+
+    return s
 
 
-def generate_dataset(rounds=4, samples=10000, output_file="results/differential_r4.csv"):
+def generate_dataset(rounds=4, samples=10000, output_file="results/differential_r4.csv", diff_word=0, diff_bit=0):
     output_path = Path(output_file)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -54,7 +64,7 @@ def generate_dataset(rounds=4, samples=10000, output_file="results/differential_
         # Class 1: True differential pairs
         for _ in range(half):
             s = random_state()
-            s2 = apply_input_difference(s)
+            s2 = apply_input_difference(s, diff_word, diff_bit)
 
             y1 = ascon_permutation(s, rounds)
             y2 = ascon_permutation(s2, rounds)
@@ -79,4 +89,4 @@ def generate_dataset(rounds=4, samples=10000, output_file="results/differential_
 
 
 if __name__ == "__main__":
-    generate_dataset(rounds=4, samples=10000)
+    generate_dataset(rounds=4, samples=10000, output_file="results/differential_r4.csv", diff_word=0, diff_bit=0)
