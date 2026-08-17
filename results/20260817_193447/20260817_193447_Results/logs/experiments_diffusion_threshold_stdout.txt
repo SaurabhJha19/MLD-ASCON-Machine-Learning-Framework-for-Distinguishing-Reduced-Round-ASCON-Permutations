@@ -1,0 +1,14 @@
+
+Diffusion Threshold Analysis
+
+ round  hamming_distance  ml_accuracy  distinguishable
+     1              7.51       1.0000             True
+     2             49.25       1.0000             True
+     3            140.62       0.9998             True
+     4            159.98       0.5035            False
+     5               NaN       0.5067            False
+
+Estimated distinguishability threshold: Round 4
+
+Saved to results/diffusion_threshold.csv
+Saved to results/diffusion_threshold.png

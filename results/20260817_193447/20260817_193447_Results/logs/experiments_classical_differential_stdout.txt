@@ -1,0 +1,6 @@
+results/differential_r2.csv: Accuracy = 1.0000, Class0 HW = 159.98, Class1 HW = 49.39
+results/differential_r3.csv: Accuracy = 0.8317, Class0 HW = 159.96, Class1 HW = 140.34
+results/differential_r4.csv: Accuracy = 0.5054, Class0 HW = 159.81, Class1 HW = 160.01
+results/differential_r5.csv: Accuracy = 0.4982, Class0 HW = 159.82, Class1 HW = 159.88
+
+Saved to results/classical_differential.csv

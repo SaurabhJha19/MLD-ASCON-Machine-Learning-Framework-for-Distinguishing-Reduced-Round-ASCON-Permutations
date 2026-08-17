@@ -1,0 +1,8 @@
+Feature Representation Comparison (XGBoost)\n
+Raw             : 0.4865
+Differential    : 0.4830
+Intermediate R1 : 1.0000
+Intermediate R2 : 1.0000
+Intermediate R3 : 1.0000
+Intermediate R4 : 0.5082
+\nSaved to results/feature_comparison.png

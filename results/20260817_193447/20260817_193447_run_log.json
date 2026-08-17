@@ -1,0 +1,8 @@
+{
+  "run_id": "20260817_193447",
+  "manifest": "20260817_193447\\run_manifest.json",
+  "timestamp": "2026-08-17T15:35:56.344277+00:00",
+  "status": "success",
+  "datasets": "run_experiments_datasets\\20260817_193447",
+  "results": "run_experiments_result\\20260817_193447"
+}

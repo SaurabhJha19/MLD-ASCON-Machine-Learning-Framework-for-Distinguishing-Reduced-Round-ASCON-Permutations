@@ -1,0 +1,27 @@
+--- rounds=2 ---
+Dataset saved to results\differential_r2.csv
+
+--- rounds=3 ---
+Dataset saved to results\differential_r3.csv
+
+--- rounds=4 ---
+Dataset saved to results\differential_r4.csv
+
+--- rounds=5 ---
+Dataset saved to results\differential_r5.csv
+
+
+--- P1 (x0, b0) ---
+Dataset saved to results\diff_p1.csv
+
+--- P2 (x0, b15) ---
+Dataset saved to results\diff_p2.csv
+
+--- P3 (x1, b0) ---
+Dataset saved to results\diff_p3.csv
+
+--- P4 (x2, b31) ---
+Dataset saved to results\diff_p4.csv
+
+--- P5 (x4, b63) ---
+Dataset saved to results\diff_p5.csv

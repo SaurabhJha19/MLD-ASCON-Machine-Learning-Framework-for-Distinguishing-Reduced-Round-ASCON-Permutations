@@ -1,0 +1,7 @@
+Differential Pattern Robustness\n
+P1 (x0,b0)  : 0.4870
+P2 (x0,b15) : 0.5060
+P3 (x1,b0)  : 0.4970
+P4 (x2,b31) : 0.4985
+P5 (x4,b63) : 0.5035
+\nSaved results/differential_patterns.csv

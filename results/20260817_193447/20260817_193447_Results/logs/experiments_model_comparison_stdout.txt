@@ -1,0 +1,16 @@
+Model Comparison Results\n
+            Dataset                Model  Accuracy   ROC-AUC
+0      Differential  Logistic Regression   0.46750  0.477958
+1      Differential        Random Forest   0.49900  0.497377
+2      Differential              XGBoost   0.48300  0.478426
+3          Integral  Logistic Regression   1.00000  1.000000
+4          Integral        Random Forest   1.00000  1.000000
+5          Integral              XGBoost   1.00000  1.000000
+6              Cube  Logistic Regression   1.00000  1.000000
+7              Cube        Random Forest   1.00000  1.000000
+8              Cube              XGBoost   1.00000  1.000000
+9   Intermediate R3  Logistic Regression   0.99975  1.000000
+10  Intermediate R3        Random Forest   1.00000  1.000000
+11  Intermediate R3              XGBoost   1.00000  1.000000
+\nSaved results/model_comparison.csv
+Saved results/model_comparison.png

@@ -1,0 +1,6 @@
+Average Hamming Distance per Round:
+Round 1: 7.46 bits
+Round 2: 49.12 bits
+Round 3: 140.35 bits
+Round 4: 160.17 bits
+Saved to results/differential_propagation.png

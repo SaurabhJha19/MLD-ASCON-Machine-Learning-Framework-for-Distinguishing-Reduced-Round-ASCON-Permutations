@@ -1,0 +1,28 @@
+\n=== Differential ===
+Dataset saved to results\tmp_differential_r2.csv
+Round 2: 1.0000
+Dataset saved to results\tmp_differential_r3.csv
+Round 3: 1.0000
+Dataset saved to results\tmp_differential_r4.csv
+Round 4: 0.5290
+Dataset saved to results\tmp_differential_r5.csv
+Round 5: 0.4860
+\n=== Integral ===
+Dataset saved to results\tmp_integral_r2.csv
+Round 2: 1.0000
+Dataset saved to results\tmp_integral_r3.csv
+Round 3: 1.0000
+Dataset saved to results\tmp_integral_r4.csv
+Round 4: 1.0000
+Dataset saved to results\tmp_integral_r5.csv
+Round 5: 0.4840
+\n=== Cube ===
+Dataset saved to results\tmp_cube_r2.csv
+Round 2: 1.0000
+Dataset saved to results\tmp_cube_r3.csv
+Round 3: 1.0000
+Dataset saved to results\tmp_cube_r4.csv
+Round 4: 1.0000
+Dataset saved to results\tmp_cube_r5.csv
+Round 5: 0.4960
+\nSaved results/rounds_comparison.png

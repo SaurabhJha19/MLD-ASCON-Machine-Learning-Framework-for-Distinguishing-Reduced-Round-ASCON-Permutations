@@ -1,0 +1,16 @@
+
+SHAP Word-Level Importance
+word  shap_importance  normalized_shap
+  x0         0.019869         0.150123
+  x1         0.025921         0.195853
+  x2         0.027708         0.209356
+  x3         0.027796         0.210016
+  x4         0.031056         0.234651
+
+Mean diffusion across measured rounds: 89.34 bits
+
+Correlation between diffusion and ML accuracy: -0.6467
+
+Saved to results/explainability_summary.csv
+Saved to results/shap_word_normalized.png
+Saved to results/explainability_diffusion.png

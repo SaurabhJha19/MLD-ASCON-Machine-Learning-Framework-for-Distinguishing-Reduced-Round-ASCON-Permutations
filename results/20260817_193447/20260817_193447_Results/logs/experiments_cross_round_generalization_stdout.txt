@@ -1,0 +1,8 @@
+Differential R2 -> R3: 0.5000
+Differential R3 -> R4: 0.4998
+Differential R4 -> R5: 0.4938
+Integral     R3 -> R4: 1.0000
+Integral     R4 -> R5: 0.5000
+Cube         R3 -> R4: 1.0000
+Cube         R4 -> R5: 0.5000
+\nSaved results/cross_round_generalization.csv

@@ -1,0 +1,7 @@
+Accuracy: 1.0000
+Saved to results/word_importance_round3.png
+x0: 0.001400
+x1: 0.001850
+x2: 0.002450
+x3: 0.001850
+x4: 0.003100

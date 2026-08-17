@@ -1,0 +1,31 @@
+\n=== Differential R4 ===
+Logistic Regression : 0.4889 � 0.0122
+Random Forest       : 0.5030 � 0.0134
+XGBoost             : 0.4968 � 0.0074
+MLP                 : 0.4968 � 0.0094
+CNN                 : 0.4988 � 0.0087
+\n=== Differential R5 ===
+Logistic Regression : 0.5022 � 0.0142
+Random Forest       : 0.4924 � 0.0159
+XGBoost             : 0.5057 � 0.0150
+MLP                 : 0.4986 � 0.0167
+CNN                 : 0.5108 � 0.0147
+\n=== Integral R5 ===
+Logistic Regression : 0.4957 � 0.0120
+Random Forest       : 0.4957 � 0.0105
+XGBoost             : 0.5007 � 0.0135
+MLP                 : 0.4935 � 0.0110
+CNN                 : 0.4960 � 0.0141
+\n=== Cube R5 ===
+Logistic Regression : 0.4913 � 0.0097
+Random Forest       : 0.4865 � 0.0147
+XGBoost             : 0.4974 � 0.0187
+MLP                 : 0.4936 � 0.0150
+CNN                 : 0.4961 � 0.0189
+\n=== Intermediate R4 ===
+Logistic Regression : 0.5028 � 0.0078
+Random Forest       : 0.5003 � 0.0068
+XGBoost             : 0.5017 � 0.0098
+MLP                 : 0.4989 � 0.0065
+CNN                 : 0.5035 � 0.0053
+\nSaved results/statistical_model_benchmark.csv

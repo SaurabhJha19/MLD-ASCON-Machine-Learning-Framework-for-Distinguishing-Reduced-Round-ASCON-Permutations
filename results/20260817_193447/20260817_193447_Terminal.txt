@@ -1,0 +1,76 @@
+
+>> python -m py_compile run_experiments.py
+>> python run_experiments.py --continue-on-error
+
+======================================================================
+MLD-ASCON REPLICATION PIPELINE
+======================================================================
+Run ID: 20260817_193447
+Python: 3.12.4
+
+======================================================================
+DATASET GENERATION
+======================================================================
+[1/23] Running datasets.random_dataset ...
+    ✓ Success (2.92s)
+[2/23] Running datasets.differential_dataset ...
+    ✓ Success (9.13s)
+[3/23] Running datasets.integral_dataset ...
+    ✓ Success (370.94s)
+[4/23] Running datasets.cube_dataset ...
+    ✓ Success (86.70s)
+[5/23] Running datasets.intermediate_dataset ...
+    ✓ Success (33.73s)
+
+======================================================================
+EXPERIMENT EXECUTION
+======================================================================
+[6/23] Running experiments.accuracy_vs_rounds ...
+    ✓ Success (11.52s)
+[7/23] Running experiments.differential_propagation ...
+    ✓ Success (6.51s)
+[8/23] Running experiments.intermediate_decay ...
+    ✓ Success (3.58s)
+[9/23] Running experiments.feature_importance ...
+    ✓ Success (92.60s)
+[10/23] Running experiments.importance_heatmap ...
+    ✓ Success (7.65s)
+[11/23] Running experiments.feature_comparison ...
+    ✓ Success (41.67s)
+[12/23] Running experiments.model_comparison ...
+    ✓ Success (31.07s)
+[13/23] Running experiments.rounds_comparison ...
+    ✓ Success (717.46s)
+[14/23] Running experiments.statistical_validation ...
+    ✓ Success (730.61s)
+[15/23] Running experiments.statistical_model_benchmark ...
+    ✓ Success (3220.90s)
+[16/23] Running experiments.cross_round_generalization ...
+    ✓ Success (19.21s)
+[17/23] Running experiments.cross_word_generalization ...
+    ✓ Success (7.62s)
+[18/23] Running experiments.differential_patterns ...
+    ✓ Success (21.56s)
+[19/23] Running experiments.shap_analysis ...
+    ✓ Success (13.28s)
+[20/23] Running experiments.diffusion_threshold ...
+    ✓ Success (5.89s)
+[21/23] Running experiments.classical_differential ...
+    ✓ Success (5.89s)
+[22/23] Running experiments.statistical_classical ...
+    ✓ Success (3.54s)
+[23/23] Running experiments.explainability_diffusion ...
+    ✓ Success (10.23s)
+
+======================================================================
+PIPELINE SUMMARY
+======================================================================
+Expected  : 23
+Executed  : 23
+Successful: 23
+Failed    : 0
+
+Datasets : .\run_experiments_datasets\20260817_193447
+Results  : .\run_experiments_result\20260817_193447
+Manifest : .\run_experiments_result\20260817_193447\run_manifest.json
+======================================================================

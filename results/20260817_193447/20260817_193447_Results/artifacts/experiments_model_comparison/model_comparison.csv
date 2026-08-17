@@ -1,0 +1,13 @@
+Dataset,Model,Accuracy,ROC-AUC
+Differential,Logistic Regression,0.4675,0.47795800000000005
+Differential,Random Forest,0.499,0.497377
+Differential,XGBoost,0.483,0.4784260000000001
+Integral,Logistic Regression,1.0,1.0
+Integral,Random Forest,1.0,1.0
+Integral,XGBoost,1.0,1.0
+Cube,Logistic Regression,1.0,1.0
+Cube,Random Forest,1.0,1.0
+Cube,XGBoost,1.0,1.0
+Intermediate R3,Logistic Regression,0.99975,1.0
+Intermediate R3,Random Forest,1.0,1.0
+Intermediate R3,XGBoost,1.0,1.0

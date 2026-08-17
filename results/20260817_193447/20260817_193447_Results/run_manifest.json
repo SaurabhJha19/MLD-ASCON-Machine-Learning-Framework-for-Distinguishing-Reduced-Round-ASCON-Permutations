@@ -1,0 +1,607 @@
+{
+  "project": "MLD-ASCON",
+  "run_id": "20260817_193447",
+  "started_at": "2026-08-17T14:04:47.584107+00:00",
+  "python": "3.12.4 (tags/v3.12.4:8e8a4ba, Jun  6 2024, 19:30:16) [MSC v.1940 64 bit (AMD64)]",
+  "executable": "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+  "repository_root": "F:\\DRDO Internship\\ascon-ml-distinguisher",
+  "execution_workspace": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+  "dataset_output_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_datasets\\20260817_193447",
+  "result_output_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447",
+  "pipeline": [
+    {
+      "module": "datasets.random_dataset",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "datasets.random_dataset"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:04:47.585023+00:00",
+      "finished_at": "2026-08-17T14:04:50.496776+00:00",
+      "duration_seconds": 2.922,
+      "return_code": 0,
+      "status": "success",
+      "stage": "dataset_generation",
+      "generated_datasets": [
+        "random_vs_ascon_r4.csv"
+      ],
+      "generated_artifacts": [],
+      "stdout_log": "logs\\datasets_random_dataset_stdout.txt",
+      "stderr_log": "logs\\datasets_random_dataset_stderr.txt"
+    },
+    {
+      "module": "datasets.differential_dataset",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-c",
+        "generate_dataset(rounds=2..5, samples=10000)"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:04:50.515706+00:00",
+      "finished_at": "2026-08-17T14:04:59.644320+00:00",
+      "duration_seconds": 9.128,
+      "return_code": 0,
+      "status": "success",
+      "generated_files": [
+        "results/differential_r2.csv",
+        "results/differential_r3.csv",
+        "results/differential_r4.csv",
+        "results/differential_r5.csv",
+        "results/diff_p1.csv",
+        "results/diff_p2.csv",
+        "results/diff_p3.csv",
+        "results/diff_p4.csv",
+        "results/diff_p5.csv"
+      ],
+      "requested_rounds": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "requested_differential_rounds": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "stage": "dataset_generation",
+      "generated_datasets": [
+        "differential_r2.csv",
+        "differential_r3.csv",
+        "differential_r4.csv",
+        "differential_r5.csv",
+        "diff_p1.csv",
+        "diff_p2.csv",
+        "diff_p3.csv",
+        "diff_p4.csv",
+        "diff_p5.csv"
+      ],
+      "generated_artifacts": [],
+      "stdout_log": "logs\\datasets_differential_dataset_stdout.txt",
+      "stderr_log": "logs\\datasets_differential_dataset_stderr.txt"
+    },
+    {
+      "module": "datasets.integral_dataset",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-c",
+        "generate_dataset(rounds=4, samples=5000, active_word=None,0..4)"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:05:13.432632+00:00",
+      "finished_at": "2026-08-17T14:11:24.365607+00:00",
+      "duration_seconds": 370.943,
+      "return_code": 0,
+      "status": "success",
+      "generated_files": [
+        "results/integral_r4.csv",
+        "results/integral_x0_r4.csv",
+        "results/integral_x1_r4.csv",
+        "results/integral_x2_r4.csv",
+        "results/integral_x3_r4.csv",
+        "results/integral_x4_r4.csv"
+      ],
+      "requested_active_words": [
+        "default",
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4"
+      ],
+      "stage": "dataset_generation",
+      "generated_datasets": [
+        "integral_r4.csv",
+        "integral_x0_r4.csv",
+        "integral_x1_r4.csv",
+        "integral_x2_r4.csv",
+        "integral_x3_r4.csv",
+        "integral_x4_r4.csv"
+      ],
+      "generated_artifacts": [],
+      "stdout_log": "logs\\datasets_integral_dataset_stdout.txt",
+      "stderr_log": "logs\\datasets_integral_dataset_stderr.txt"
+    },
+    {
+      "module": "datasets.cube_dataset",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "datasets.cube_dataset"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:11:24.404042+00:00",
+      "finished_at": "2026-08-17T14:12:51.109548+00:00",
+      "duration_seconds": 86.705,
+      "return_code": 0,
+      "status": "success",
+      "stage": "dataset_generation",
+      "generated_datasets": [
+        "cube_r4.csv"
+      ],
+      "generated_artifacts": [],
+      "stdout_log": "logs\\datasets_cube_dataset_stdout.txt",
+      "stderr_log": "logs\\datasets_cube_dataset_stderr.txt"
+    },
+    {
+      "module": "datasets.intermediate_dataset",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-c",
+        "generate_intermediate_dataset(rounds=4, target_round=1..4)"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:12:51.147532+00:00",
+      "finished_at": "2026-08-17T14:13:24.873839+00:00",
+      "duration_seconds": 33.727,
+      "return_code": 0,
+      "status": "success",
+      "generated_files": [
+        "results/intermediate_r4_round1.csv",
+        "results/intermediate_round1.csv",
+        "results/intermediate_round2.csv",
+        "results/intermediate_round3.csv",
+        "results/intermediate_round4.csv"
+      ],
+      "requested_intermediate_rounds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "stage": "dataset_generation",
+      "generated_datasets": [
+        "intermediate_r4_round1.csv",
+        "intermediate_round1.csv",
+        "intermediate_round2.csv",
+        "intermediate_round3.csv",
+        "intermediate_round4.csv"
+      ],
+      "generated_artifacts": [],
+      "stdout_log": "logs\\datasets_intermediate_dataset_stdout.txt",
+      "stderr_log": "logs\\datasets_intermediate_dataset_stderr.txt"
+    },
+    {
+      "module": "experiments.accuracy_vs_rounds",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.accuracy_vs_rounds"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:13:24.922840+00:00",
+      "finished_at": "2026-08-17T14:13:36.439696+00:00",
+      "duration_seconds": 11.517,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "accuracy_vs_rounds.png"
+      ],
+      "stdout_log": "logs\\experiments_accuracy_vs_rounds_stdout.txt",
+      "stderr_log": "logs\\experiments_accuracy_vs_rounds_stderr.txt"
+    },
+    {
+      "module": "experiments.differential_propagation",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.differential_propagation"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:13:36.453783+00:00",
+      "finished_at": "2026-08-17T14:13:42.957301+00:00",
+      "duration_seconds": 6.508,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "differential_propagation.png"
+      ],
+      "stdout_log": "logs\\experiments_differential_propagation_stdout.txt",
+      "stderr_log": "logs\\experiments_differential_propagation_stderr.txt"
+    },
+    {
+      "module": "experiments.intermediate_decay",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.intermediate_decay"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:13:42.979168+00:00",
+      "finished_at": "2026-08-17T14:13:46.558535+00:00",
+      "duration_seconds": 3.58,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "intermediate_decay.png"
+      ],
+      "stdout_log": "logs\\experiments_intermediate_decay_stdout.txt",
+      "stderr_log": "logs\\experiments_intermediate_decay_stderr.txt"
+    },
+    {
+      "module": "experiments.feature_importance",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.feature_importance"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:13:46.571417+00:00",
+      "finished_at": "2026-08-17T14:15:19.174940+00:00",
+      "duration_seconds": 92.604,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "word_importance_round3.png"
+      ],
+      "stdout_log": "logs\\experiments_feature_importance_stdout.txt",
+      "stderr_log": "logs\\experiments_feature_importance_stderr.txt"
+    },
+    {
+      "module": "experiments.importance_heatmap",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.importance_heatmap"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:15:19.203253+00:00",
+      "finished_at": "2026-08-17T14:15:26.854253+00:00",
+      "duration_seconds": 7.65,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "importance_heatmap.png"
+      ],
+      "stdout_log": "logs\\experiments_importance_heatmap_stdout.txt",
+      "stderr_log": "logs\\experiments_importance_heatmap_stderr.txt"
+    },
+    {
+      "module": "experiments.feature_comparison",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.feature_comparison"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:15:26.868982+00:00",
+      "finished_at": "2026-08-17T14:16:08.544065+00:00",
+      "duration_seconds": 41.674,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "feature_comparison.png"
+      ],
+      "stdout_log": "logs\\experiments_feature_comparison_stdout.txt",
+      "stderr_log": "logs\\experiments_feature_comparison_stderr.txt"
+    },
+    {
+      "module": "experiments.model_comparison",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.model_comparison"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:16:08.567047+00:00",
+      "finished_at": "2026-08-17T14:16:39.634441+00:00",
+      "duration_seconds": 31.066,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "model_comparison.csv",
+        "model_comparison.png"
+      ],
+      "stdout_log": "logs\\experiments_model_comparison_stdout.txt",
+      "stderr_log": "logs\\experiments_model_comparison_stderr.txt"
+    },
+    {
+      "module": "experiments.rounds_comparison",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.rounds_comparison"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:16:39.659554+00:00",
+      "finished_at": "2026-08-17T14:28:37.120862+00:00",
+      "duration_seconds": 717.461,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "rounds_comparison.png",
+        "tmp_cube_r2.csv",
+        "tmp_cube_r3.csv",
+        "tmp_cube_r4.csv",
+        "tmp_cube_r5.csv",
+        "tmp_differential_r2.csv",
+        "tmp_differential_r3.csv",
+        "tmp_differential_r4.csv",
+        "tmp_differential_r5.csv",
+        "tmp_integral_r2.csv",
+        "tmp_integral_r3.csv",
+        "tmp_integral_r4.csv",
+        "tmp_integral_r5.csv"
+      ],
+      "stdout_log": "logs\\experiments_rounds_comparison_stdout.txt",
+      "stderr_log": "logs\\experiments_rounds_comparison_stderr.txt"
+    },
+    {
+      "module": "experiments.statistical_validation",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.statistical_validation"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:28:37.222025+00:00",
+      "finished_at": "2026-08-17T14:40:47.833363+00:00",
+      "duration_seconds": 730.611,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "rounds_comparison_errorbars.png",
+        "statistical_results.csv",
+        "stat_cube_r2.csv",
+        "stat_cube_r3.csv",
+        "stat_cube_r4.csv",
+        "stat_cube_r5.csv",
+        "stat_differential_r2.csv",
+        "stat_differential_r3.csv",
+        "stat_differential_r4.csv",
+        "stat_differential_r5.csv",
+        "stat_integral_r2.csv",
+        "stat_integral_r3.csv",
+        "stat_integral_r4.csv",
+        "stat_integral_r5.csv"
+      ],
+      "stdout_log": "logs\\experiments_statistical_validation_stdout.txt",
+      "stderr_log": "logs\\experiments_statistical_validation_stderr.txt"
+    },
+    {
+      "module": "experiments.statistical_model_benchmark",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.statistical_model_benchmark"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T14:40:47.907848+00:00",
+      "finished_at": "2026-08-17T15:34:28.803951+00:00",
+      "duration_seconds": 3220.897,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "statistical_model_benchmark.csv"
+      ],
+      "stdout_log": "logs\\experiments_statistical_model_benchmark_stdout.txt",
+      "stderr_log": "logs\\experiments_statistical_model_benchmark_stderr.txt"
+    },
+    {
+      "module": "experiments.cross_round_generalization",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.cross_round_generalization"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:34:28.837860+00:00",
+      "finished_at": "2026-08-17T15:34:48.043636+00:00",
+      "duration_seconds": 19.206,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "cross_round_generalization.csv"
+      ],
+      "stdout_log": "logs\\experiments_cross_round_generalization_stdout.txt",
+      "stderr_log": "logs\\experiments_cross_round_generalization_stderr.txt"
+    },
+    {
+      "module": "experiments.cross_word_generalization",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.cross_word_generalization"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:34:48.095210+00:00",
+      "finished_at": "2026-08-17T15:34:55.714448+00:00",
+      "duration_seconds": 7.622,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "cross_word_generalization.csv"
+      ],
+      "stdout_log": "logs\\experiments_cross_word_generalization_stdout.txt",
+      "stderr_log": "logs\\experiments_cross_word_generalization_stderr.txt"
+    },
+    {
+      "module": "experiments.differential_patterns",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.differential_patterns"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:34:55.758309+00:00",
+      "finished_at": "2026-08-17T15:35:17.318242+00:00",
+      "duration_seconds": 21.56,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "differential_patterns.csv"
+      ],
+      "stdout_log": "logs\\experiments_differential_patterns_stdout.txt",
+      "stderr_log": "logs\\experiments_differential_patterns_stderr.txt"
+    },
+    {
+      "module": "experiments.shap_analysis",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.shap_analysis"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:35:17.376960+00:00",
+      "finished_at": "2026-08-17T15:35:30.654151+00:00",
+      "duration_seconds": 13.281,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "shap_integral_r4.png"
+      ],
+      "stdout_log": "logs\\experiments_shap_analysis_stdout.txt",
+      "stderr_log": "logs\\experiments_shap_analysis_stderr.txt"
+    },
+    {
+      "module": "experiments.diffusion_threshold",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.diffusion_threshold"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:35:30.687397+00:00",
+      "finished_at": "2026-08-17T15:35:36.579567+00:00",
+      "duration_seconds": 5.892,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "diffusion_threshold.csv",
+        "diffusion_threshold.png"
+      ],
+      "stdout_log": "logs\\experiments_diffusion_threshold_stdout.txt",
+      "stderr_log": "logs\\experiments_diffusion_threshold_stderr.txt"
+    },
+    {
+      "module": "experiments.classical_differential",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.classical_differential"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:35:36.612981+00:00",
+      "finished_at": "2026-08-17T15:35:42.489662+00:00",
+      "duration_seconds": 5.888,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "classical_differential.csv"
+      ],
+      "stdout_log": "logs\\experiments_classical_differential_stdout.txt",
+      "stderr_log": "logs\\experiments_classical_differential_stderr.txt"
+    },
+    {
+      "module": "experiments.statistical_classical",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.statistical_classical"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:35:42.531272+00:00",
+      "finished_at": "2026-08-17T15:35:46.066516+00:00",
+      "duration_seconds": 3.536,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "statistical_classical.csv"
+      ],
+      "stdout_log": "logs\\experiments_statistical_classical_stdout.txt",
+      "stderr_log": "logs\\experiments_statistical_classical_stderr.txt"
+    },
+    {
+      "module": "experiments.explainability_diffusion",
+      "command": [
+        "F:\\DRDO Internship\\ascon-ml-distinguisher\\.venv\\Scripts\\python.exe",
+        "-m",
+        "experiments.explainability_diffusion"
+      ],
+      "working_directory": "F:\\DRDO Internship\\ascon-ml-distinguisher\\run_experiments_result\\20260817_193447\\workspace",
+      "started_at": "2026-08-17T15:35:46.108164+00:00",
+      "finished_at": "2026-08-17T15:35:56.328387+00:00",
+      "duration_seconds": 10.233,
+      "return_code": 0,
+      "status": "success",
+      "stage": "experiment",
+      "generated_datasets": [],
+      "generated_artifacts": [
+        "explainability_diffusion.png",
+        "explainability_summary.csv",
+        "shap_word_normalized.png"
+      ],
+      "stdout_log": "logs\\experiments_explainability_diffusion_stdout.txt",
+      "stderr_log": "logs\\experiments_explainability_diffusion_stderr.txt"
+    }
+  ],
+  "finished_at": "2026-08-17T15:35:56.344277+00:00",
+  "summary": {
+    "total_expected": 23,
+    "total_executed": 23,
+    "successful": 23,
+    "failed": 0,
+    "pipeline_status": "success"
+  },
+  "outputs": {
+    "datasets": "run_experiments_datasets\\20260817_193447",
+    "results": "run_experiments_result\\20260817_193447",
+    "manifest": "run_experiments_result\\20260817_193447\\run_manifest.json"
+  }
+}
