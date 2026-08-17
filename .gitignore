@@ -1,17 +1,43 @@
-# Virtual environment
-.venv/
-env/
-venv/
-
-# Python cache and compiled files
-**/__pycache__/
+# Python
+__pycache__/
 *.py[cod]
 *$py.class
 
-# IDE and Editor settings
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDEs
 .vscode/
 .idea/
 
-# OS specific files
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Test/cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# datasets folder
+run_experiments_datasets/*
+!run_experiments_datasets/.gitkeep
+
+# results folder
+run_experiments_result/*
+!run_experiments_result/.gitkeep
+
+project_tree.txt
