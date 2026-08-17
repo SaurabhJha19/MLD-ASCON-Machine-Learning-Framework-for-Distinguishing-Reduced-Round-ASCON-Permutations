@@ -237,6 +237,387 @@ def run_intermediate_dataset_stage(workspace):
     }
 
 
+
+def run_differential_dataset_stage(workspace):
+    """
+    Generate the differential datasets required across the experiment
+    suite for rounds R2-R5.
+
+    The individual dataset generator is intentionally left unchanged.
+    The runner calls its generate_dataset() function explicitly with the
+    required round count and output filename so that every experiment
+    sees its required inputs inside the isolated workspace.
+    """
+    start = time.perf_counter()
+    started_at = utc_timestamp()
+
+    generated = []
+    stdout_parts = []
+    stderr_parts = []
+
+    requests = [
+        (2, "results/differential_r2.csv"),
+        (3, "results/differential_r3.csv"),
+        (4, "results/differential_r4.csv"),
+        (5, "results/differential_r5.csv"),
+    ]
+
+    for target_round, output_file in requests:
+        command = [
+            sys.executable,
+            "-c",
+            (
+                "from datasets.differential_dataset import generate_dataset; "
+                f"generate_dataset("
+                f"rounds={target_round}, "
+                f"samples=10000, "
+                f"output_file={output_file!r})"
+            ),
+        ]
+
+        env = os.environ.copy()
+        root_string = str(ROOT)
+        existing_pythonpath = env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = (
+            root_string
+            + (
+                os.pathsep + existing_pythonpath
+                if existing_pythonpath
+                else ""
+            )
+        )
+
+        completed = subprocess.run(
+            command,
+            cwd=workspace,
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+        stdout_parts.append(
+            f"--- rounds={target_round} ---\n"
+            + completed.stdout
+        )
+
+        if completed.stderr:
+            stderr_parts.append(
+                f"--- rounds={target_round} ---\n"
+                + completed.stderr
+            )
+
+        if completed.returncode != 0:
+            return {
+                "module": "datasets.differential_dataset",
+                "command": command,
+                "working_directory": str(workspace),
+                "started_at": started_at,
+                "finished_at": utc_timestamp(),
+                "duration_seconds": round(
+                    time.perf_counter() - start,
+                    3,
+                ),
+                "return_code": completed.returncode,
+                "status": "failed",
+                "stdout": "\n".join(stdout_parts),
+                "stderr": "\n".join(stderr_parts),
+                "generated_files": generated,
+                "requested_rounds": [2, 3, 4, 5],
+            }
+
+        generated.append(output_file)
+
+    return {
+        "module": "datasets.differential_dataset",
+        "command": [
+            sys.executable,
+            "-c",
+            "generate_dataset(rounds=2..5, samples=10000)",
+        ],
+        "working_directory": str(workspace),
+        "started_at": started_at,
+        "finished_at": utc_timestamp(),
+        "duration_seconds": round(
+            time.perf_counter() - start,
+            3,
+        ),
+        "return_code": 0,
+        "status": "success",
+        "stdout": "\n".join(stdout_parts),
+        "stderr": "\n".join(stderr_parts),
+        "generated_files": generated,
+        "requested_rounds": [2, 3, 4, 5],
+    }
+
+def run_differential_pattern_dataset_stage(workspace):
+    """
+    Generate the five differential-pattern datasets required by
+    experiments.differential_patterns.
+
+    The pattern definitions are taken directly from the project's
+    differential_patterns experiment:
+
+        P1 -> x0, bit 0
+        P2 -> x0, bit 15
+        P3 -> x1, bit 0
+        P4 -> x2, bit 31
+        P5 -> x4, bit 63
+
+    The underlying dataset generator is left unchanged.
+    """
+
+    start = time.perf_counter()
+    started_at = utc_timestamp()
+
+    generated = []
+    stdout_parts = []
+    stderr_parts = []
+
+    requests = [
+        ("P1", 0, 0, "results/diff_p1.csv"),
+        ("P2", 0, 15, "results/diff_p2.csv"),
+        ("P3", 1, 0, "results/diff_p3.csv"),
+        ("P4", 2, 31, "results/diff_p4.csv"),
+        ("P5", 4, 63, "results/diff_p5.csv"),
+    ]
+
+    for pattern_name, diff_word, diff_bit, output_file in requests:
+
+        command = [
+            sys.executable,
+            "-c",
+            (
+                "from datasets.differential_dataset import generate_dataset; "
+                f"generate_dataset("
+                f"rounds=4, "
+                f"samples=10000, "
+                f"output_file={output_file!r}, "
+                f"diff_word={diff_word}, "
+                f"diff_bit={diff_bit})"
+            ),
+        ]
+
+        env = os.environ.copy()
+
+        root_string = str(ROOT)
+        existing_pythonpath = env.get("PYTHONPATH", "")
+
+        env["PYTHONPATH"] = (
+            root_string
+            + (
+                os.pathsep + existing_pythonpath
+                if existing_pythonpath
+                else ""
+            )
+        )
+
+        completed = subprocess.run(
+            command,
+            cwd=workspace,
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+        stdout_parts.append(
+            f"--- {pattern_name} "
+            f"(x{diff_word}, b{diff_bit}) ---\n"
+            + completed.stdout
+        )
+
+        if completed.stderr:
+            stderr_parts.append(
+                f"--- {pattern_name} "
+                f"(x{diff_word}, b{diff_bit}) ---\n"
+                + completed.stderr
+            )
+
+        if completed.returncode != 0:
+            return {
+                "module": "datasets.differential_dataset",
+                "command": command,
+                "working_directory": str(workspace),
+                "started_at": started_at,
+                "finished_at": utc_timestamp(),
+                "duration_seconds": round(
+                    time.perf_counter() - start,
+                    3,
+                ),
+                "return_code": completed.returncode,
+                "status": "failed",
+                "stdout": "\n".join(stdout_parts),
+                "stderr": "\n".join(stderr_parts),
+                "generated_files": generated,
+                "requested_patterns": [
+                    "P1 (x0,b0)",
+                    "P2 (x0,b15)",
+                    "P3 (x1,b0)",
+                    "P4 (x2,b31)",
+                    "P5 (x4,b63)",
+                ],
+            }
+
+        generated.append(output_file)
+
+    return {
+        "module": "datasets.differential_dataset",
+        "command": [
+            sys.executable,
+            "-c",
+            (
+                "generate_dataset(rounds=4, samples=10000, "
+                "diff_word/diff_bit for P1..P5)"
+            ),
+        ],
+        "working_directory": str(workspace),
+        "started_at": started_at,
+        "finished_at": utc_timestamp(),
+        "duration_seconds": round(
+            time.perf_counter() - start,
+            3,
+        ),
+        "return_code": 0,
+        "status": "success",
+        "stdout": "\n".join(stdout_parts),
+        "stderr": "\n".join(stderr_parts),
+        "generated_files": generated,
+        "requested_patterns": [
+            "P1 (x0,b0)",
+            "P2 (x0,b15)",
+            "P3 (x1,b0)",
+            "P4 (x2,b31)",
+            "P5 (x4,b63)",
+        ],
+    }
+
+def run_integral_dataset_stage(workspace):
+    """
+    Generate the default Integral R4 dataset plus one dataset for each
+    active ASCON word (x0..x4) required by cross_word_generalization.
+
+    This keeps datasets/integral_dataset.py unchanged and makes the
+    dependency explicit in the replication runner.
+    """
+    start = time.perf_counter()
+    started_at = utc_timestamp()
+
+    generated = []
+    stdout_parts = []
+    stderr_parts = []
+
+    requests = [
+        ("default", None, "results/integral_r4.csv"),
+        ("x0", 0, "results/integral_x0_r4.csv"),
+        ("x1", 1, "results/integral_x1_r4.csv"),
+        ("x2", 2, "results/integral_x2_r4.csv"),
+        ("x3", 3, "results/integral_x3_r4.csv"),
+        ("x4", 4, "results/integral_x4_r4.csv"),
+    ]
+
+    for name, active_word, output_file in requests:
+        active_word_arg = (
+            ""
+            if active_word is None
+            else f", active_word={active_word}"
+        )
+
+        command = [
+            sys.executable,
+            "-c",
+            (
+                "from datasets.integral_dataset import generate_dataset; "
+                f"generate_dataset("
+                f"rounds=4, samples=5000"
+                f"{active_word_arg}, "
+                f"output_file={output_file!r})"
+            ),
+        ]
+
+        env = os.environ.copy()
+        root_string = str(ROOT)
+        existing_pythonpath = env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = (
+            root_string
+            + (
+                os.pathsep + existing_pythonpath
+                if existing_pythonpath
+                else ""
+            )
+        )
+
+        completed = subprocess.run(
+            command,
+            cwd=workspace,
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+        )
+
+        stdout_parts.append(
+            f"--- {name} ---\n"
+            + completed.stdout
+        )
+
+        if completed.stderr:
+            stderr_parts.append(
+                f"--- {name} ---\n"
+                + completed.stderr
+            )
+
+        if completed.returncode != 0:
+            return {
+                "module": "datasets.integral_dataset",
+                "command": command,
+                "working_directory": str(workspace),
+                "started_at": started_at,
+                "finished_at": utc_timestamp(),
+                "duration_seconds": round(
+                    time.perf_counter() - start,
+                    3,
+                ),
+                "return_code": completed.returncode,
+                "status": "failed",
+                "stdout": "\n".join(stdout_parts),
+                "stderr": "\n".join(stderr_parts),
+                "generated_files": generated,
+                "requested_active_words": [
+                    "default", "x0", "x1", "x2", "x3", "x4"
+                ],
+            }
+
+        generated.append(output_file)
+
+    return {
+        "module": "datasets.integral_dataset",
+        "command": [
+            sys.executable,
+            "-c",
+            "generate_dataset(rounds=4, samples=5000, active_word=None,0..4)",
+        ],
+        "working_directory": str(workspace),
+        "started_at": started_at,
+        "finished_at": utc_timestamp(),
+        "duration_seconds": round(
+            time.perf_counter() - start,
+            3,
+        ),
+        "return_code": 0,
+        "status": "success",
+        "stdout": "\n".join(stdout_parts),
+        "stderr": "\n".join(stderr_parts),
+        "generated_files": generated,
+        "requested_active_words": [
+            "default", "x0", "x1", "x2", "x3", "x4"
+        ],
+    }
+
+
 def run_script(module_name, workspace):
     """
     Execute one module from an isolated workspace.
@@ -436,8 +817,44 @@ def main():
 
         before = snapshot_results(workspace_results)
 
-        if module_name == "datasets.intermediate_dataset":
+        if module_name == "datasets.differential_dataset":
+
+            # Generate standard round-wise differential datasets.
+            result = run_differential_dataset_stage(workspace)
+
+            # Generate the five differential-pattern datasets required by
+            # experiments.differential_patterns.
+            if result["status"] == "success":
+
+                pattern_result = run_differential_pattern_dataset_stage(
+                    workspace
+                )
+
+                # Merge generated files and execution information.
+                result["generated_files"].extend(
+                    pattern_result.get("generated_files", [])
+                )
+
+                result["stdout"] += (
+                    "\n\n"
+                    + pattern_result.get("stdout", "")
+                )
+
+                result["stderr"] += (
+                    "\n\n"
+                    + pattern_result.get("stderr", "")
+                )
+
+                if pattern_result["status"] != "success":
+                    result["status"] = "failed"
+                    result["return_code"] = pattern_result["return_code"]
+
+        elif module_name == "datasets.integral_dataset":
+            result = run_integral_dataset_stage(workspace)
+
+        elif module_name == "datasets.intermediate_dataset":
             result = run_intermediate_dataset_stage(workspace)
+
         else:
             result = run_script(module_name, workspace)
 
@@ -454,6 +871,14 @@ def main():
 
         # Record the explicit intermediate-stage outputs as well. The
         # copy operation above remains authoritative for actual files.
+        if module_name == "datasets.differential_dataset":
+            result["requested_differential_rounds"] = [2, 3, 4, 5]
+
+        if module_name == "datasets.integral_dataset":
+            result["requested_active_words"] = [
+                "default", "x0", "x1", "x2", "x3", "x4"
+            ]
+
         if module_name == "datasets.intermediate_dataset":
             result["requested_intermediate_rounds"] = [1, 2, 3, 4]
 

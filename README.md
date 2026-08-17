@@ -159,7 +159,7 @@ Experiments produce both machine-readable and visual outputs, including:
 The repository includes a top-level replication runner:
 
 ```
-python run_experiments.py
+python run_experiments.py --continue-on-error
 ```
 The pipeline orchestrates dataset generation and experiment execution while maintaining isolated run directories:
 
@@ -544,7 +544,7 @@ Individual experiment scripts generally write their generated CSV data and visua
 
 For a complete end-to-end replication run, use the top-level experiment runner:
 ```
-python run_experiments.py
+python run_experiments.py --continue-on-error
 ```
 The pipeline automatically orchestrates the dataset-generation and experimental stages and records the execution under a unique run identifier.
 
@@ -661,7 +661,7 @@ The `ascon/` directory contains the permutation implementation, `datasets/` cont
 
 The recommended method is:
 ```
-python run_experiments.py
+python run_experiments.py --continue-on-error
 ```
 The pipeline executes the configured dataset-generation and experimental stages sequentially.
 
@@ -715,7 +715,7 @@ The terminal reports the progress of each stage:
 
 The exact execution time depends on the machine and dataset sizes.
 
-> **Fallback Execution Procedure: In the event of a top-level `run_experiments.py` orchestrator or runner failure, please proceed by executing individual experiment scripts independently.**
+> **Fallback Execution Procedure: In the event of a top-level orchestrator or runner failure `run_experiments.py`, please proceed by executing individual experiment scripts independently.**
 
 ### Identify the Run ID
 
@@ -930,8 +930,9 @@ Get-Content .\run_experiments_result\<RUN_ID>\logs\experiments_<MODULE>_stderr.t
 ```
 After resolving the underlying environment or dependency problem, run:
 ```
-python run_experiments.py
+python run_experiments.py --continue-on-error
 ```
+
 A new run receives a new `<RUN_ID>`, preserving the previous run for auditability.
 
 ### Diagnostic Pipeline Execution
