@@ -32,13 +32,13 @@ def generate_dataset(rounds=4, samples=10000, output_file="results/random_vs_asc
 
         half = samples // 2
 
-        # Class 1: ASCON outputs
+        #True ASCON outputs
         for _ in range(half):
             s = random_state()
             out = ascon_permutation(s, rounds)
             writer.writerow(state_to_bits(out) + [1])
 
-        # Class 0: Random 320-bit vectors
+        #Random 320-bit vectors
         for _ in range(samples - half):
             writer.writerow(random_bits_320() + [0])
 

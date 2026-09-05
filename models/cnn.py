@@ -34,7 +34,6 @@ class CNNDistinguisher(nn.Module):
 
 
 def reshape_ascon(X):
-    # Convert (N,320) -> (N,1,5,64)
     return X.reshape(-1, 1, 5, 64)
 
 

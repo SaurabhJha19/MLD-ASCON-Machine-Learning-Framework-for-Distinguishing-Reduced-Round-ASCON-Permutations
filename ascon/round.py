@@ -4,7 +4,6 @@ from ascon.diffusion import diffusion_layer
 
 
 def ascon_round(state, round_constant):
-    """Execute one ASCON permutation round."""
     state = add_round_constant(state.copy(), round_constant)
     state = sbox_layer(state)
     state = diffusion_layer(state)

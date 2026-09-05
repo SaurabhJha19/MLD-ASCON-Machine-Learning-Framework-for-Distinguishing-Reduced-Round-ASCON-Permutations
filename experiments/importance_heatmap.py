@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Round 1 and 2 saturate at zero importance
 importance = np.array([
-    [0.0,      0.0,      0.0,      0.0,      0.0],      # Round 1
-    [0.0,      0.0,      0.0,      0.0,      0.0],      # Round 2
-    [0.00075,  0.00145,  0.00175,  0.00105,  0.00160],  # Round 3
+    [0.0,      0.0,      0.0,      0.0,      0.0],      
+    [0.0,      0.0,      0.0,      0.0,      0.0],      
+    [0.00075,  0.00145,  0.00175,  0.00105,  0.00160],
 ])
 
 plt.figure(figsize=(7, 3))

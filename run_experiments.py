@@ -8,15 +8,9 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parent
 RUN_DIR = ROOT / "run_experiments_result"
 DATASETS_RUN_DIR = ROOT / "run_experiments_datasets"
-
-
-# --------------------------------------------------
-# Pipeline definition
-# --------------------------------------------------
 
 DATASET_SCRIPTS = [
     "datasets.random_dataset",
@@ -53,7 +47,6 @@ def utc_timestamp():
 
 
 def snapshot_results(results_dir):
-    """Record file size and modification time in a run-local results directory."""
     snapshot = {}
 
     if not results_dir.exists():
@@ -78,7 +71,6 @@ def snapshot_results(results_dir):
 
 
 def collect_changed_files(results_dir, before):
-    """Return files created or modified since the supplied snapshot."""
     changed = []
 
     if not results_dir.exists():
@@ -106,7 +98,6 @@ def collect_changed_files(results_dir, before):
 
 
 def copy_artifacts(source_results_dir, relative_files, destination_root):
-    """Copy selected run-local results into the requested output directory."""
     copied = []
 
     for relative in relative_files:
@@ -125,14 +116,6 @@ def copy_artifacts(source_results_dir, relative_files, destination_root):
 
 
 def run_intermediate_dataset_stage(workspace):
-    """
-    Generate all intermediate-state datasets required by the experiment
-    suite without modifying datasets/intermediate_dataset.py.
-
-    Round 1 keeps the original filename because intermediate_decay.py
-    already depends on it. Canonical intermediate_round{N}.csv files are
-    also produced for the feature-importance and related experiments.
-    """
     start = time.perf_counter()
     started_at = utc_timestamp()
 
@@ -208,8 +191,6 @@ def run_intermediate_dataset_stage(workspace):
 
         generated.append(output_file)
 
-        # Also provide the canonical R1 name without changing the
-        # original dataset generator.
         if target_round == 1:
             source = workspace / "results/intermediate_r4_round1.csv"
             canonical = workspace / "results/intermediate_round1.csv"
@@ -239,15 +220,6 @@ def run_intermediate_dataset_stage(workspace):
 
 
 def run_differential_dataset_stage(workspace):
-    """
-    Generate the differential datasets required across the experiment
-    suite for rounds R2-R5.
-
-    The individual dataset generator is intentionally left unchanged.
-    The runner calls its generate_dataset() function explicitly with the
-    required round count and output filename so that every experiment
-    sees its required inputs inside the isolated workspace.
-    """
     start = time.perf_counter()
     started_at = utc_timestamp()
 
@@ -352,22 +324,6 @@ def run_differential_dataset_stage(workspace):
     }
 
 def run_differential_pattern_dataset_stage(workspace):
-    """
-    Generate the five differential-pattern datasets required by
-    experiments.differential_patterns.
-
-    The pattern definitions are taken directly from the project's
-    differential_patterns experiment:
-
-        P1 -> x0, bit 0
-        P2 -> x0, bit 15
-        P3 -> x1, bit 0
-        P4 -> x2, bit 31
-        P5 -> x4, bit 63
-
-    The underlying dataset generator is left unchanged.
-    """
-
     start = time.perf_counter()
     started_at = utc_timestamp()
 
@@ -495,13 +451,6 @@ def run_differential_pattern_dataset_stage(workspace):
     }
 
 def run_integral_dataset_stage(workspace):
-    """
-    Generate the default Integral R4 dataset plus one dataset for each
-    active ASCON word (x0..x4) required by cross_word_generalization.
-
-    This keeps datasets/integral_dataset.py unchanged and makes the
-    dependency explicit in the replication runner.
-    """
     start = time.perf_counter()
     started_at = utc_timestamp()
 
@@ -619,16 +568,6 @@ def run_integral_dataset_stage(workspace):
 
 
 def run_script(module_name, workspace):
-    """
-    Execute one module from an isolated workspace.
-
-    The project root is supplied through PYTHONPATH so the normal
-    package imports continue to work even though cwd is not the
-    repository root.
-
-    Because cwd is the isolated workspace, existing scripts that use
-    paths such as 'results/foo.csv' continue to work without changes.
-    """
     start = time.perf_counter()
     started_at = utc_timestamp()
 
@@ -697,7 +636,6 @@ def run_script(module_name, workspace):
 
 
 def save_logs(run_root, module_name, result):
-    """Save stdout/stderr and return their manifest-relative paths."""
     log_dir = run_root / "logs"
     log_dir.mkdir(parents=True, exist_ok=True)
 
@@ -723,11 +661,6 @@ def save_logs(run_root, module_name, result):
 
 
 def strip_console_output(result):
-    """
-    Keep the JSON manifest compact.
-
-    Full stdout/stderr remains available in logs/.
-    """
     result.pop("stdout", None)
     result.pop("stderr", None)
 
@@ -750,10 +683,6 @@ def main():
 
     args = parser.parse_args()
 
-    # --------------------------------------------------
-    # Prepare run directories
-    # --------------------------------------------------
-
     RUN_DIR.mkdir(parents=True, exist_ok=True)
     DATASETS_RUN_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -765,9 +694,6 @@ def main():
     dataset_root = DATASETS_RUN_DIR / run_id
     dataset_root.mkdir(parents=True, exist_ok=True)
 
-    # The isolated workspace is deliberately outside the repository's
-    # permanent results/ directory. Every script still sees a normal
-    # relative "results/" path.
     workspace = run_root / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
@@ -798,10 +724,6 @@ def main():
 
     pipeline_failed = False
 
-    # --------------------------------------------------
-    # Phase 1: Dataset generation
-    # --------------------------------------------------
-
     print("=" * 70)
     print("DATASET GENERATION")
     print("=" * 70)
@@ -819,18 +741,14 @@ def main():
 
         if module_name == "datasets.differential_dataset":
 
-            # Generate standard round-wise differential datasets.
             result = run_differential_dataset_stage(workspace)
 
-            # Generate the five differential-pattern datasets required by
-            # experiments.differential_patterns.
             if result["status"] == "success":
 
                 pattern_result = run_differential_pattern_dataset_stage(
                     workspace
                 )
 
-                # Merge generated files and execution information.
                 result["generated_files"].extend(
                     pattern_result.get("generated_files", [])
                 )
@@ -869,8 +787,6 @@ def main():
             dataset_root / module_name.replace(".", "_"),
         )
 
-        # Record the explicit intermediate-stage outputs as well. The
-        # copy operation above remains authoritative for actual files.
         if module_name == "datasets.differential_dataset":
             result["requested_differential_rounds"] = [2, 3, 4, 5]
 
@@ -912,10 +828,6 @@ def main():
 
             if not args.continue_on_error:
                 break
-
-    # --------------------------------------------------
-    # Phase 2: Experiment execution
-    # --------------------------------------------------
 
     if not pipeline_failed or args.continue_on_error:
         print()
@@ -988,10 +900,6 @@ def main():
                 if not args.continue_on_error:
                     break
 
-    # --------------------------------------------------
-    # Finalize manifest
-    # --------------------------------------------------
-
     finished_at = utc_timestamp()
     manifest["finished_at"] = finished_at
 
@@ -1055,9 +963,6 @@ def main():
         encoding="utf-8",
     )
 
-    # Keep the isolated workspace only when debugging is needed.
-    # On a completely successful run it is no longer necessary because
-    # all generated datasets, artifacts, and logs have already been copied.
     if manifest["summary"]["pipeline_status"] == "success":
         shutil.rmtree(workspace, ignore_errors=True)
 

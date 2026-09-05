@@ -15,7 +15,6 @@ ROUND_CONSTANTS = [
 
 
 def add_round_constant(state, rc):
-    """Inject round constant into x2."""
     state.x2 ^= rc
     state.x2 &= 0xFFFFFFFFFFFFFFFF
     return state

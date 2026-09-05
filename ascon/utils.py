@@ -2,13 +2,13 @@ MASK64 = 0xFFFFFFFFFFFFFFFF
 
 
 def rotr(x: int, n: int) -> int:
-    """Rotate right a 64-bit integer by n bits."""
+    #Rotate right
     x &= MASK64
     return ((x >> n) | (x << (64 - n))) & MASK64
 
 
 def rotl(x: int, n: int) -> int:
-    """Rotate left a 64-bit integer by n bits."""
+    #Rotate left
     x &= MASK64
     return ((x << n) | (x >> (64 - n))) & MASK64
 

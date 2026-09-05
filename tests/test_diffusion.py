@@ -15,7 +15,6 @@ print(out)
 assert isinstance(out, AsconState)
 assert len(out.as_list()) == 5
 
-# Ensure diffusion changes the state
 assert out.as_list() != s.as_list()
 
 print("Diffusion test passed")

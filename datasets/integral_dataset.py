@@ -26,10 +26,7 @@ def xor_states(a, b):
 
 
 def integral_vector(base_state, rounds=4, active_word=0):
-    """
-    Build an integral by varying the lowest 8 bits of one ASCON word.
-    active_word: 0..4 corresponding to x0..x4
-    """
+
     acc = AsconState(0, 0, 0, 0, 0)
 
     for v in range(256):
@@ -64,13 +61,13 @@ def generate_dataset(rounds=4, samples=5000, active_word=0, output_file="results
 
         half = samples // 2
 
-        # Class 1: True integral vectors
+        #True integral vectors
         for _ in range(half):
             base = random_state()
             vec = integral_vector(base, rounds, active_word)
             writer.writerow(state_to_bits(vec) + [1])
 
-        # Class 0: Random XOR aggregates
+        #Random XOR aggregates
         for _ in range(samples - half):
             acc = AsconState(0, 0, 0, 0, 0)
 

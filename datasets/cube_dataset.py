@@ -26,10 +26,6 @@ def xor_states(a, b):
 
 
 def cube_sum(base_state, rounds=4):
-    """
-    Use an 8-bit cube in x0 (bits 0-7).
-    XOR all 256 outputs together.
-    """
     acc = AsconState(0, 0, 0, 0, 0)
 
     for v in range(256):
@@ -44,10 +40,7 @@ def cube_sum(base_state, rounds=4):
 
 
 def random_cube_sum(rounds=4):
-    """
-    Random baseline: XOR 256 independent ASCON outputs.
-    This keeps the aggregation structure identical to the true cube sum.
-    """
+
     acc = AsconState(0, 0, 0, 0, 0)
 
     for _ in range(256):
@@ -70,13 +63,13 @@ def generate_dataset(rounds=4, samples=5000, output_file="results/cube_r4.csv"):
 
         half = samples // 2
 
-        # Class 1: True cube sums
+        #True cube sums
         for _ in range(half):
             base = random_state()
             vec = cube_sum(base, rounds)
             writer.writerow(state_to_bits(vec) + [1])
 
-        # Class 0: Random cube sums
+        #Random cube sums
         for _ in range(samples - half):
             vec = random_cube_sum(rounds)
             writer.writerow(state_to_bits(vec) + [0])

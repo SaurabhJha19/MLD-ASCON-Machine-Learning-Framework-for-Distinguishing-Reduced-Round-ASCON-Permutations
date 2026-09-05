@@ -11,11 +11,6 @@ from sklearn.metrics import accuracy_score
 DATASET = "results/integral_r4.csv"
 OUTPUT = "results/shap_integral_r4.png"
 
-
-# --------------------------------------------------
-# Load dataset
-# --------------------------------------------------
-
 df = pd.read_csv(DATASET)
 
 X = df.drop(columns=["label"])
@@ -28,11 +23,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42,
     stratify=y
 )
-
-
-# --------------------------------------------------
-# Train XGBoost
-# --------------------------------------------------
 
 model = XGBClassifier(
     n_estimators=100,
@@ -52,22 +42,11 @@ accuracy = accuracy_score(y_test, pred)
 
 print(f"Accuracy: {accuracy:.4f}")
 
-
-# --------------------------------------------------
-# SHAP analysis
-# --------------------------------------------------
-
 explainer = shap.TreeExplainer(model)
 
-# Limit samples to keep SHAP computation manageable
 X_sample = X_test.iloc[:500]
 
 shap_values = explainer.shap_values(X_sample)
-
-
-# --------------------------------------------------
-# Global feature importance
-# --------------------------------------------------
 
 mean_abs_shap = np.abs(shap_values).mean(axis=0)
 
@@ -86,11 +65,6 @@ print("\nTop 20 important bits:")
 
 print(importance.head(20).to_string(index=False))
 
-
-# --------------------------------------------------
-# Word-level aggregation
-# --------------------------------------------------
-
 word_importance = {}
 
 for word in range(5):
@@ -108,10 +82,6 @@ print("\nWord-level SHAP importance:")
 for word, value in word_importance.items():
     print(f"{word}: {value:.8f}")
 
-
-# --------------------------------------------------
-# Plot word-level importance
-# --------------------------------------------------
 
 plt.figure(figsize=(8, 5))
 

@@ -4,12 +4,7 @@ from sklearn.metrics import accuracy_score
 
 
 def classical_differential_score(X):
-    """
-    Simple classical score based on Hamming weight
-    of the observed differential vector.
 
-    The score is intentionally model-free.
-    """
 
     return X.sum(axis=1)
 
@@ -23,13 +18,11 @@ def evaluate_classical(dataset_path):
 
     scores = classical_differential_score(X)
 
-    # Estimate a threshold from the two classes
     class0_mean = scores[y == 0].mean()
     class1_mean = scores[y == 1].mean()
 
     threshold = (class0_mean + class1_mean) / 2
 
-    # Determine which side corresponds to class 1
     if class1_mean > class0_mean:
         predictions = (scores >= threshold).astype(int)
     else:

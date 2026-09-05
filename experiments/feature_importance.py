@@ -6,10 +6,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.inspection import permutation_importance
 
-
-# -----------------------------
-# Load dataset
-# -----------------------------
 df = pd.read_csv("results/intermediate_round3.csv")
 
 X = df.drop(columns=["label"]).values
@@ -23,9 +19,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     stratify=y,
 )
 
-# -----------------------------
-# Train sklearn MLP
-# -----------------------------
 model = MLPClassifier(
     hidden_layer_sizes=(256, 128),
     activation="relu",
@@ -38,9 +31,6 @@ model.fit(X_train, y_train)
 acc = model.score(X_test, y_test)
 print(f"Accuracy: {acc:.4f}")
 
-# -----------------------------
-# Permutation importance
-# -----------------------------
 result = permutation_importance(
     model,
     X_test,
@@ -52,12 +42,6 @@ result = permutation_importance(
 
 importance = result.importances_mean
 
-# -----------------------------
-# Aggregate by ASCON word
-# x0 = bits 0-63
-# x1 = bits 64-127
-# ...
-# -----------------------------
 word_importance = []
 for i in range(5):
     start = i * 64

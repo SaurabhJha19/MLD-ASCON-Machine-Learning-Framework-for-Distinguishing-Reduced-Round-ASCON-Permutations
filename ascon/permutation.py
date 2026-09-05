@@ -16,13 +16,6 @@ def ascon_permutation(state, rounds=12):
 
 
 def ascon_permutation_trace(state, rounds=12):
-    """
-    Return the intermediate state after every round.
-    states[0] = after round 1
-    states[1] = after round 2
-    ...
-    states[-1] = after final round
-    """
     if rounds < 1 or rounds > 12:
         raise ValueError("Rounds must be between 1 and 12")
 

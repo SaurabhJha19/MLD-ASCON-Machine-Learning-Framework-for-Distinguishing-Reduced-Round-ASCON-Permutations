@@ -20,7 +20,6 @@ def evaluate_hamming_weight(df, rng):
 
     scores = X.sum(axis=1)
 
-    # Randomized 80/20 evaluation split.
     indices = np.arange(len(labels))
     rng.shuffle(indices)
 
@@ -31,7 +30,6 @@ def evaluate_hamming_weight(df, rng):
     test_scores = scores[test_idx]
     test_labels = labels[test_idx]
 
-    # Threshold learned from training portion.
     train_idx = indices[:split]
 
     train_scores = scores[train_idx]
@@ -57,7 +55,6 @@ def confidence_interval(values):
     mean = np.mean(values)
     std = np.std(values, ddof=1)
 
-    # 95% normal-approximation CI
     ci = 1.96 * std / np.sqrt(len(values))
 
     return mean, std, ci

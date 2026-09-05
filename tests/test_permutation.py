@@ -27,7 +27,6 @@ for i, out in enumerate(outputs, start=2):
     print(f"Output after {i if i <= 6 else (8 if i == 7 else 12)} rounds:")
     print(out)
 
-# Basic sanity checks
 assert outputs[0].as_list() != s.as_list()
 assert outputs[-1].as_list() != s.as_list()
 assert outputs[0].as_list() != outputs[-1].as_list()

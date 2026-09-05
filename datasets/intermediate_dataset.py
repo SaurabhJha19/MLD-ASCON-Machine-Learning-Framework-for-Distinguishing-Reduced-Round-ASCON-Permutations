@@ -40,7 +40,7 @@ def apply_input_difference(state):
 
 
 def generate_intermediate_dataset(rounds=4, target_round=1, samples=20000,
-                                  output_file="results/intermediate_r4_round1.csv"):
+    output_file="results/intermediate_r4_round1.csv"):
     output_path = Path(output_file)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -52,7 +52,7 @@ def generate_intermediate_dataset(rounds=4, target_round=1, samples=20000,
 
         half = samples // 2
 
-        # Class 1: True differential pairs
+        # True differential pairs
         for _ in range(half):
             s = random_state()
             s2 = apply_input_difference(s)
@@ -63,7 +63,7 @@ def generate_intermediate_dataset(rounds=4, target_round=1, samples=20000,
             dy = xor_states(t1[target_round - 1], t2[target_round - 1])
             writer.writerow(state_to_bits(dy) + [1])
 
-        # Class 0: Random differential vectors
+        # Random differential vectors
         for _ in range(samples - half):
             s1 = random_state()
             s2 = random_state()

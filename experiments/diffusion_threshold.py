@@ -1,12 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
-# --------------------------------------------------
-# Existing experimental results
-# --------------------------------------------------
-
-# Average Hamming distances from differential_propagation.py
 hamming_distance = {
     1: 7.51,
     2: 49.25,
@@ -14,7 +8,6 @@ hamming_distance = {
     4: 159.98,
 }
 
-# Statistically validated differential XGBoost accuracy
 ml_accuracy = {
     1: 1.0000,
     2: 1.0000,
@@ -22,11 +15,6 @@ ml_accuracy = {
     4: 0.5035,
     5: 0.5067,
 }
-
-
-# --------------------------------------------------
-# Build table
-# --------------------------------------------------
 
 rows = []
 
@@ -49,11 +37,6 @@ df = pd.DataFrame(rows)
 print("\nDiffusion Threshold Analysis\n")
 print(df.to_string(index=False))
 
-
-# --------------------------------------------------
-# Estimate threshold
-# --------------------------------------------------
-
 threshold_round = None
 
 for _, row in df.iterrows():
@@ -69,20 +52,10 @@ print(
     f"Round {threshold_round}"
 )
 
-
-# --------------------------------------------------
-# Save table
-# --------------------------------------------------
-
 df.to_csv(
     "results/diffusion_threshold.csv",
     index=False
 )
-
-
-# --------------------------------------------------
-# Plot
-# --------------------------------------------------
 
 fig, ax1 = plt.subplots(figsize=(9, 5))
 

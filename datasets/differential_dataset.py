@@ -61,7 +61,7 @@ def generate_dataset(rounds=4, samples=10000, output_file="results/differential_
 
         half = samples // 2
 
-        # Class 1: True differential pairs
+        #True differential pairs
         for _ in range(half):
             s = random_state()
             s2 = apply_input_difference(s, diff_word, diff_bit)
@@ -73,7 +73,7 @@ def generate_dataset(rounds=4, samples=10000, output_file="results/differential_
 
             writer.writerow(state_to_bits(dy) + [1])
 
-        # Class 0: Random differential vectors
+        #Random differential vectors
         for _ in range(samples - half):
             s1 = random_state()
             s2 = random_state()
